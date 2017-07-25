@@ -10,8 +10,8 @@
 			<a class="item item-thumbnail-left" style="border-color: transparent!important;
     background-color: transparent!important;" ng-repeat="song in allSongs">
 				<img ng-src="{{song.thumb || 'https://1.bp.blogspot.com/-eoZUK337wkQ/V0SZt1ObDOI/AAAAAAAADuo/qO81W8h4OjE0lfwb2LEJpn6sNn2gXmTPwCLcB/s1600/Song.png'}}">
-				<h2 style="white-space: initial!important;">שם: {{song.name}}</h2>
-				<p>אורך: {{song.length | number}}</p>
+				<h2 style="white-space: initial!important; font-weight: 900">{{song.name}}</h2>
+				<p>אורך: {{song.length | numberToTime}}</p>
 			</a>
 		</div>
 	</ion-content>

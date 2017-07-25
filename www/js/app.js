@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ion-autocomplete'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 	.run(function ($ionicPlatform) {
 		$ionicPlatform.ready(function () {
@@ -14,6 +14,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 				StatusBar.styleDefault();
 			}
 		});
+	})
+	
+	.filter('numberToTime', function (input) {
+		return function (input) {
+			
+		}
 	})
 
 	.config(function ($stateProvider, $urlRouterProvider) {
