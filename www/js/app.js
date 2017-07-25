@@ -17,9 +17,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 	})
 	
 	.filter('numberToTime', function (input) {
-		return function (input) {
-			
-		}
+		return function () {
+			return 0;
+		};
 	})
 
 	.config(function ($stateProvider, $urlRouterProvider) {
