@@ -332,3 +332,7 @@ input[disabled] {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4) !important;
 	background: #e42112 !important;
 }
+
+.background-playlist {
+	background: -webkit-linear-gradient(#d0e0e8, #e2c6bf);
+}

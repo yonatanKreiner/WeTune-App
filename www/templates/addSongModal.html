@@ -1,0 +1,28 @@
+<ion-modal-view style="direction: rtl">
+	<div class="bar bar-header bar-assertive">
+		<h1 class="title">הוסף שירים לרשימה</h1>
+		<button style="color: white" class="button button-icon button-clear button-light ion-ios-close-outline" ng-click="modalAddSong.hide()"></button>
+		<!-- Button right [empty] -->
+		<button class="button button-icon button-clear button-light"></button>
+	</div>
+	<div class="bar bar-subheader">
+		<div class="list">
+			<label class="item item-input">
+				<i class="icon ion-ios-musical-notes placeholder-icon-large"></i>
+				<input type="text" ng-model="query"
+							 placeholder="הכנס מחרוזת לחיפוש שיר"
+							 ng-keyup="getYoutubeData(query)">
+			</label>
+		</div>
+	</div>
+
+
+	<ion-content class="has-subheader" scroll="true" style="direction: rtl">
+		<div class="list">
+			<a class="item item-thumbnail-left" ng-repeat="song in suggestions" ng-click="addSongToList(song)">
+				<img ng-src="{{song.snippet.thumbnails.default.url || 'https://1.bp.blogspot.com/-eoZUK337wkQ/V0SZt1ObDOI/AAAAAAAADuo/qO81W8h4OjE0lfwb2LEJpn6sNn2gXmTPwCLcB/s1600/Song.png'}}">
+				<h2 style=" white-space: initial;">{{song.snippet.title}}</h2>
+			</a>
+		</div>
+  </ion-content>
+</ion-modal-view>
