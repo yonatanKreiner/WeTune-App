@@ -1,0 +1,17 @@
+<ion-view hide-nav-bar="true">
+
+	<!-- Footer -->
+	<ion-content has-header="true"  padding="true" class="" style="direction: rtl">
+		<div class="list">
+
+			<a class="item item-thumbnail-left" ng-repeat="song in allSongs">
+				<img src="cover.jpg">
+				<h2>שם: {{song.name}}</h2>
+				<p>אורך: {{song.length}}</p>
+			</a>
+		</div>
+	</ion-content>
+	<button class="button button-float" ng-click="addNewSong()">
+		<i class="icon ion-plus"></i>
+	</button>
+</ion-view>

@@ -24,11 +24,11 @@ app.controller('WelcomeCtrl', function(Firebase, Auth, $scope, $stateParams, $io
 
   $scope.isIncorrectValue = function(val) {
     return angular.isUndefined(val) || val === null || val == "";
-  }
+  };
 
   $scope.cleanVariables = function() {
     $scope.error = null;
-  }
+  };
 
   /**********************************
    * [FIREBASE]
@@ -41,12 +41,12 @@ app.controller('WelcomeCtrl', function(Firebase, Auth, $scope, $stateParams, $io
       $scope.loggedInUser = authData;
       // Close register modal in register case
       $scope.closeRegister();
-      // Redirect correct page
-      if($scope.register) {
-        $location.path('/slide');
-      } else {
-        $location.path('/tab/photo');
-      }
+      // // Redirect correct page
+      // if($scope.register) {
+      //   $location.path('/slide');
+      // } else {
+			$location.path('/search');
+      // }
     } else {
       console.log("Signed out");
       $scope.loggedInUser = null;
@@ -76,7 +76,7 @@ app.controller('WelcomeCtrl', function(Firebase, Auth, $scope, $stateParams, $io
     } else {
       Auth.$signInWithEmailAndPassword(user.email, user.password)
       .then(function(authData) {
-        
+
         $scope.loggedInUser = authData;
       }).catch(function(error) {
         $scope.error = ""+error;
@@ -136,39 +136,44 @@ app.controller('WelcomeCtrl', function(Firebase, Auth, $scope, $stateParams, $io
 /**********************************
  * [CONTROLLER] CAMERA
  *********************************/
-app.controller('PhotoCtrl', function($scope) {
+app.controller('playlistCtrl', function($scope, $stateParams, Database) {
+	$scope.roomName = $stateParams.roomName;
 
+	Database.ref('rooms').orderByChild('name').equalTo($scope.roomName).limitToFirst(1).on("value", function(snapshot) {
+		$scope.allSongs = snapshot.val()["2"].songs;
+		console.log(snapshot.val());
+		$scope.$apply();
+	});
 
+	$scope.addNewSong = function () {
+		
+	}
 });
 
 /**********************************
  * [CONTROLLER] SEARCH
  *********************************/
-app.controller('SearchCtrl', function($scope) {
-/*  
-  $scope.bieres = [];
+app.controller('SearchCtrl', function($scope, roomsService, Database, $ionicPopup, $state) {
 
-  $scope.$watch('query', function() {
-    if($scope.query.length > 1) {
-      $scope.getBiere();
-    } else {
-      $scope.details = [];
-    }
-  });
+		$scope.logInToRoom = function (roomName, pin) {
+			Database.ref('rooms').orderByChild('name').equalTo(roomName).limitToFirst(1).on("value", function(snapshot) {
+				if(snapshot.val() && pin == snapshot.val()["2"].pin) {
+					$state.go('playlist', {roomName: roomName})
+				} else {
+					var myPopup = $ionicPopup.show({
+						title: 'שגיאה בשם חדר או קוד',
+						buttons: [
+							{ text: 'סגור', type: 'assertive' }
+						]
+					});
+					$scope.room = null;
+				}
+			});
+		};
 
-  $scope.getBiere = function() {
-    searchSrv.getBiere().then(
-      function(bieres) {
-        applyRemoteData(bieres);
-      }
-    );
-  };
-
-  function applyRemoteData(newBieres) {
-    $scope.bieres = newBieres;
-    alert($scope.bieres);
-  }
-*/
+		$scope.getTestItems = function () {
+			return $scope.allRoomsNames;
+		};
 });
 
 
@@ -176,7 +181,7 @@ app.controller('SearchCtrl', function($scope) {
  * [CONTROLLER] ACCOUNT
  *********************************/
 app.controller('AccountCtrl', function(Firebase, Auth, $scope, $location) {
-  
+
   /**********************************
    * [FIREBASE]
    *********************************/
@@ -187,7 +192,7 @@ app.controller('AccountCtrl', function(Firebase, Auth, $scope, $location) {
       $scope.loggedInUser = null;
       $location.path('/welcome');
     }
-  }); 
+  });
 
   $scope.logout = function() {
     Auth.$signOut();

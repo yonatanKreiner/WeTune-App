@@ -1,58 +1,26 @@
 <ion-view hide-nav-bar="true">
-  
-  <!-- Search Bar --> 
-  <ion-header-bar class="bar-dark item-input-inset">
-    <label class="item-input-wrapper">
-      <i class="icon ion-search placeholder-icon"></i>
-      <input type="search" placeholder="Recherche" ng-model="query" ng-init="query=''" focus-me>
-    </label>
-    <button class="button button-clear" ng-show="query.length > 0" ng-click="query = ''">
-      Cancel
-    </button>
-  </ion-header-bar>
 
-  <!-- Content -->
-  <ion-content class="stable-bg">
-    <div class="list">
-      <div class="item item-divider">
-        Electronique
-      </div>
-      
-      <a class="item item-thumbnail-left no-padding-bottom" href="#">
-        <img src="img/album_0.jpeg" class="img-bottle">
-        <h2 class="item-title">Overwerk - After hours</h2>
-        <p class="item-label">
-          Let your ears enjoy these 6 electro/house 
-        </p>
-      </a>
+	<!-- Footer -->
+	<ion-content has-header="true"  padding="true" class="scroll-vertical background" direction="rtl">
+		<div class="row row-center center-content" style="direction: rtl">
+			<div class="col col-center">
 
-      <a class="item item-thumbnail-left no-padding-bottom" ng-repeat="biere in bieres" href="#">
-        <img src="img/nevada.png" class="img-bottle">
-        <h2 class="item-title">{{biere.b_nom}}</h2>
-        <div class="row row-limited">
-          <div class="col-30">
-            <div class="row row-limited">
-              <div class="col right-limited">
-                <div class="icon-round">
-                  <img src="img/flag/us.svg">
-                </div>
-              </div>
-              <div class="col">
-                <p class="item-label">
-                  Etat-Unis
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-70">
-            <p class="item-label">
-              <i class="icon ion-beer"></i> American Pale Ale&nbsp;&nbsp;
-              <i class="icon ion-waterdrop"></i> 4.5&nbsp;&nbsp;
-              <i class="icon ion-ios-star"></i> 4.5&nbsp;&nbsp;
-            </p>
-          </div>
-        </div>
-      </a>
-    </div>
-  </ion-content>
+		<div class="list list-inset">
+			<label class="item item-input bar">
+				<i class="icon ion-music-note placeholder-icon-large"></i>
+				<input type="text" placeholder="הכנס שם חדר" ng-model="room.name">
+			</label>
+			<label class="item item-input">
+				<i class="icon ion-ios-locked-outline placeholder-icon-large"></i>
+				<input type="number" placeholder="הכנס קוד" maxlength="4" ng-model="room.pin">
+			</label>
+		</div>
+
+		<a class="button button-block button-calm" ng-click="logInToRoom(room.name, room.pin)">
+			התחבר לחדר
+		</a>
+			</div>
+		</div>
+
+	</ion-content>
 </ion-view>
