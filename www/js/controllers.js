@@ -137,9 +137,13 @@ app.controller('WelcomeCtrl', function(Firebase, Auth, $scope, $stateParams, $io
 /**********************************
  * [CONTROLLER] CAMERA
  *********************************/
-app.controller('playlistCtrl', function($scope, $stateParams, Database, $ionicModal, $http, $ionicPopup, $rootScope) {
+app.controller('playlistCtrl', function($scope, $stateParams, Database, $ionicModal, $http, $ionicPopup, $rootScope, $location) {
 	$scope.roomName = $stateParams.roomName;
+	Database.ref('rooms/' + $scope.roomName + '/users').push($rootScope.userName || 'unknown').then(function () {
 
+	}, function (err) {
+
+	});
 	Database.ref('rooms/' + $scope.roomName).on("value", function(snapshot) {
 		$scope.allSongs = snapshot.val().songs;
 		if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
@@ -148,10 +152,14 @@ app.controller('playlistCtrl', function($scope, $stateParams, Database, $ionicMo
 		}
 	});
 
+	$scope.logOut = function () {
+		$location.path('/search');
+	};
+
 	$scope.addNewSong = function () {
 		$ionicModal.fromTemplateUrl('templates/addSongModal.html', {
 			scope: $scope,
-			animation: 'slide-in-up',
+			animation: 'slide-in-up'
 		}).then(function(modal) {
 			$scope.modalAddSong = modal;
 			$scope.modalAddSong.show();
@@ -237,7 +245,7 @@ app.controller('SearchCtrl', function($scope, roomsService, Database, $ionicPopu
 		$scope.logInToRoom = function (roomName, pin) {
 			Database.ref('rooms/' + roomName).on("value", function(snapshot) {
 				if(snapshot.val() && pin == snapshot.val().pin) {
-					$state.go('playlist', {roomName: roomName})
+					$state.go('playlist', {roomName: roomName}, {reload: true})
 				} else {
 					var myPopup = $ionicPopup.show({
 						title: 'שגיאה בשם חדר או קוד',
