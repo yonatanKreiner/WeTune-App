@@ -1,0 +1,54 @@
+<ion-view hide-nav-bar="true">
+  
+  <!-- Footer -->
+  <ion-content has-header="true" padding="true" scroll="false">
+    <div class="bar bar-footer bar-transparent" >
+     <div class="row">
+
+      <!-- Left -->
+      <div class="col col-left">
+        <a href="" ng-click="openRegister()">Inscription</a>
+      </div>
+
+      <!-- Right -->
+      <div class="col col-right">
+        <a href="" ng-click="openForget()">Mot de passe oublié</a>
+      </div>
+     </div>
+    </div>
+  </ion-content>
+
+  <!-- Content -->
+  <ion-content has-header="true"  padding="true" class="scroll-vertical background">
+    <img src="img/logo.png" style="width:200px;margin-bottom:40px;">
+
+    <div class="row row-center center-content">
+      <div class="col col-center">
+
+        <!-- Form -->
+        <div class="list list-inset">
+          <label class="item item-input bar">
+            <i class="icon ion-ios-email-outline placeholder-icon-large"></i>
+            <input type="text" placeholder="Mail" ng-model="user.email">
+          </label>
+          <label class="item item-input">
+            <i class="icon ion-ios-locked-outline placeholder-icon-large"></i>
+            <input type="password" placeholder="Mot de passe" ng-model="user.password">
+          </label>
+        </div>
+        
+        <!-- Connexion button -->
+        <a class="button button-block button-calm" ng-click="loginUser(user)">
+          Connexion
+        </a>
+
+        <!-- Error -->
+        <div class="card" ng-if="error">
+          <div class="item item-text-wrap">
+            <p class="assertive text-center"><strong>{{ error }}</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
