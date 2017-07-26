@@ -1,6 +1,6 @@
 <ion-view hide-nav-bar="true">
 	<div class="bar bar-header bar-assertive">
-		<h1 class="title">רשימת שירים</h1>
+		<h1 class="title">{{roomName}}</h1>
 		<button style="color: white" class="button button-icon button-clear button-light ion-log-out" ng-click="logOut()"></button>
 	</div>
 
@@ -10,13 +10,13 @@
 
 			<a class="item item-thumbnail-left" ng-repeat="(key, value) in allSongs track by $index" ng-class="$first ? 'currentSong' : 'waitingSong'">
 				<img ng-src="{{value.thumb || 'https://1.bp.blogspot.com/-eoZUK337wkQ/V0SZt1ObDOI/AAAAAAAADuo/qO81W8h4OjE0lfwb2LEJpn6sNn2gXmTPwCLcB/s1600/Song.png'}}">
-				<h2 style="white-space: initial!important; font-weight: 900;" ng-class="$root.userName == song.requester && $root.userName ? 'showDelete': ''">{{value.name}}</h2>
-				<p ng-class="$root.userName == song.requester && $root.userName ? 'showDelete': ''">אורך: {{buildTimeFormat(value.length)}}</p>
+				<h2 style="white-space: initial!important; font-weight: 900;" ng-class="$root.userName == song.requester && $root.userName || true ? 'showDelete': ''">{{value.name}}</h2>
+				<p ng-class="$root.userName == song.requester && $root.userName || true ? 'showDelete': ''">אורך: {{buildTimeFormat(value.length)}}</p>
 				<button class="ion-ios-trash-outline" style="color: red;
     			position: absolute;
     			top: 10px;
     			right: 0px;
-    			font-size: 34px;" ng-click="removeSongFromList(song, roomName)" data-ng-show="$root.userName == song.requester && $root.userName">
+    			font-size: 34px;" ng-click="removeSongFromList(song, roomName)" data-ng-show="$root.userName == song.requester && $root.userName || true">
 				</button>
 			</a>
 			
@@ -25,11 +25,11 @@
 	<div class="bar bar-footer bar-assertive">
 		<div class="" style="margin-top: -9px;">
 			<div class="range range-positive">
-				<i ng-click="changeSongStatus(true)" class="icon ion-ios-play"></i>
 				<i ng-click="changeSongStatus(false)" class="icon ion-ios-pause"></i>
-				<i class="icon ion-ios-volume-high"></i>
+				<i ng-click="changeSongStatus(true)" class="icon ion-ios-play"></i>
+				<i style="font-size: 48px;" class="icon ion-ios-volume-low"></i>
 				<input type="range" min="0" max="100" ng-change="changeVolume(priceSlider)" ng-model="priceSlider">
-				<i class="icon ion-ios-volume-low"></i>
+				<i style="font-size: 48px;"  class="icon ion-ios-volume-high"></i>
 			</div>
 		</div>
 	</div>
