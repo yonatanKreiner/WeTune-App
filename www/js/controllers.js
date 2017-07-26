@@ -216,10 +216,8 @@ app.controller('playlistCtrl', function($scope, $stateParams, Database, Auth, $i
 		});
 	}
 
-	$scope.removeSongFromDB = function(songName, roomName) {
-		Database.ref("rooms/" + roomName + "/songs").equalTo(songName).on("value", function(snapshot) {
-			snapshot.remove();
-		});
+	$scope.removeSongFromDB = function(songID, roomName) {
+		Database.ref("rooms/" + roomName + "/songs").child(songID).remove();
 	};
 
   $scope.removeSongFromList = function(song, roomName) {
@@ -233,7 +231,7 @@ app.controller('playlistCtrl', function($scope, $stateParams, Database, Auth, $i
 					type: 'button-positive',
 					onTap: function(e) {
 						//var id = $scope.findSongID(song, roomName);
-						$scope.removeSongFromDB(song.name, roomName);
+						$scope.removeSongFromDB(song, roomName);
 					}
 				}
 			]
