@@ -145,13 +145,39 @@ app.controller('playlistCtrl', function($scope, $stateParams, Database, Auth, $i
 	}, function (err) {
 
 	});
+
+	$scope.priceSlider = "100";
+
 	Database.ref('rooms/' + $scope.roomName).on("value", function(snapshot) {
 		$scope.allSongs = snapshot.val().songs;
+		$scope.priceSlider = snapshot.val().volume || $scope.priceSlider;
 		if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
 
 			$scope.$apply();
 		}
 	});
+
+	$scope.changeVolume = function (volume) {
+		Database.ref('rooms/' + $scope.roomName + '/volume').set(volume).then(function () {
+
+		}, function (err) {
+
+		});
+	};
+
+	$scope.changeSongStatus = function (status) {
+		Database.ref('rooms/' + $scope.roomName + '/status').set(status).then(function () {
+
+		}, function (err) {
+
+		});
+	};
+
+	$scope.slider = {
+		options: {
+			floor: 0
+		}
+	};
 
 	$scope.logOut = function () {
 		$location.path('/search');

@@ -310,13 +310,14 @@ input[disabled] {
 
 
 .button-float {
-	background: #111 !important;
-	box-shadow: 0px 2px 27px #888888;	color: white !important;
+	background: #ef473a !important;
+	color: white !important;
 	z-index: 12 !important;
 	position: absolute !important;
 	bottom: 10px !important;
 	right: 10px !important;
 	border-radius: 50% !important;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26) !important;
 	-webkit-transform: translate3d(0, 0, 0) !important;
 	transform: translate3d(0, 0, 0) !important;
 	-webkit-transition: 0.2s linear !important;
@@ -333,13 +334,12 @@ input[disabled] {
 }
 
 .background-playlist {
-	background: -webkit-linear-gradient(#1c1d1f, #3c3635);
-	color: white;
+	background: -webkit-linear-gradient(#d0e0e8, #e2c6bf);
 }
 
 .currentSong {
 	border-color: transparent !important;
-	background-color: rgba(171, 163, 163, 0.21) !important;
+	background-color: rgba(128, 119, 119, 0.4) !important;
 }
 
 .waitingSong {
