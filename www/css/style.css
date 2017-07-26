@@ -334,7 +334,7 @@ input[disabled] {
 }
 
 .background-playlist {
-	background: -webkit-linear-gradient(#d0e0e8, #e2c6bf);
+	background: -webkit-linear-gradient(#e5fff8, #e1e0ef);
 }
 
 .currentSong {
@@ -349,4 +349,17 @@ input[disabled] {
 
 .showDelete {
 	margin-right: 21px!important;
+}
+
+
+/* nav bar overrides */
+.bar.bar-assertive {
+border-color: #12bde4;
+background-color: #0d87a2;
+background-image: linear-gradient(0deg, #e42112, #e42112 50%, transparent 50%);
+color: #fff;
+}
+
+.button-float {
+	background: #c147ff !important;
 }

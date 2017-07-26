@@ -140,8 +140,9 @@ app.controller('WelcomeCtrl', function(Firebase, Auth, $scope, $stateParams, $io
 app.controller('playlistCtrl', function($scope, $stateParams, Database, Auth, $ionicModal, $http, $ionicPopup, $rootScope, $location, toastr) {
 	$scope.roomName = $stateParams.roomName;
 	$rootScope.$currentUser = $rootScope.userName;
+	console.log($rootScope.userName);
 	Database.ref('rooms/' + $scope.roomName + '/users').push($rootScope.userName || 'unknown').then(function () {
-
+  
 	}, function (err) {
 
 	});
@@ -283,25 +284,28 @@ app.controller('playlistCtrl', function($scope, $stateParams, Database, Auth, $i
 
 	function convertISO8601ToSeconds(input) {
 
-		var reptms = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/;
-		var hours = 0, minutes = 0, seconds = 0, totalseconds;
+		var d = new Date(input);
 
-		if (reptms.test(input)) {
-			var matches = reptms.exec(input);
-			if (matches[1]) hours = Number(matches[1]);
-			if (matches[2]) minutes = Number(matches[2]);
-			if (matches[3]) seconds = Number(matches[3]);
-			totalseconds = hours * 3600  + minutes * 60 + seconds;
-		}
+		// var reptms = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/;
+		// var hours = 0, minutes = 0, seconds = 0, totalseconds;
 
-		return (totalseconds);
+		// if (reptms.test(input)) {
+		// 	var matches = reptms.exec(input);
+		// 	if (matches[1]) hours = Number(matches[1]);
+		// 	if (matches[2]) minutes = Number(matches[2]);
+		// 	if (matches[3]) seconds = Number(matches[3]);
+		// 	totalseconds = hours * 3600  + minutes * 60 + seconds;
+		// }
+
+		console.log(d);d
+		return (d.getSeconds());
 	}
 
 	$scope.getYoutubeData = function(searchText){
 		$http.get('https://www.googleapis.com/youtube/v3/search', {
 			params: {
 				key: "AIzaSyC-0pj2WMY25D3OzmB-Icl3GmBPI4PICjg",
-				type: 'video',
+				type: 'song',
 				maxResults: '12',
 				pageToken: $scope.nextPage ? $scope.nextPage : '',
 				part: 'id,snippet',

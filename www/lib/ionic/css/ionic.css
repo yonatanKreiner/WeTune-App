@@ -4956,7 +4956,7 @@ a.subdued {
       opacity: 1; }
 
 ion-tabs.tabs-color-active-light .tab-item {
-  color: #fff; }
+  color: #444; }
   ion-tabs.tabs-color-active-light .tab-item.tab-item-active, ion-tabs.tabs-color-active-light .tab-item.active, ion-tabs.tabs-color-active-light .tab-item.activated {
     color: #fff; }
 
