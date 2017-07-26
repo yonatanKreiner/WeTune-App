@@ -61,7 +61,7 @@ app.controller('WelcomeCtrl', function(Firebase, Auth, $scope, $stateParams, $io
       // Create the user on Auth instance
       Auth.$createUserWithEmailAndPassword(form.email, form.password)
       .then(function() {
-        $scope.register = true;
+				$scope.register = true;
         // If this is a success, log in
         return Auth.$signInWithEmailAndPassword(form.email, form.password)
       }).catch(function(error) {
@@ -137,8 +137,9 @@ app.controller('WelcomeCtrl', function(Firebase, Auth, $scope, $stateParams, $io
 /**********************************
  * [CONTROLLER] CAMERA
  *********************************/
-app.controller('playlistCtrl', function($scope, $stateParams, Database, $ionicModal, $http, $ionicPopup, $rootScope, $location) {
+app.controller('playlistCtrl', function($scope, $stateParams, Database, Auth, $ionicModal, $http, $ionicPopup, $rootScope, $location) {
 	$scope.roomName = $stateParams.roomName;
+	$rootScope.$currentUser = $rootScope.userName;
 	Database.ref('rooms/' + $scope.roomName + '/users').push($rootScope.userName || 'unknown').then(function () {
 
 	}, function (err) {
@@ -156,6 +157,10 @@ app.controller('playlistCtrl', function($scope, $stateParams, Database, $ionicMo
 		$location.path('/search');
 	};
 
+/**********************************
+ * [CONTROLLER] SONGS
+ *********************************/
+
 	$scope.addNewSong = function () {
 		$ionicModal.fromTemplateUrl('templates/addSongModal.html', {
 			scope: $scope,
@@ -163,6 +168,43 @@ app.controller('playlistCtrl', function($scope, $stateParams, Database, $ionicMo
 		}).then(function(modal) {
 			$scope.modalAddSong = modal;
 			$scope.modalAddSong.show();
+		});
+	};
+
+  $scope.findSongID = function(song, roomName) {
+
+		return Database.ref("rooms/" + roomName + "/songs").once("value", function(childSnapshot) {
+			childSnapshot.forEach(function(snapshot) {
+				var childKey = snapshot.key;
+				var childValue = snapshot.val();
+
+				console.log(childKey + ":" + childValue);
+
+				if(snapshot.val()["name"] === song.name)
+					return childKey;
+			})
+		});
+	}
+
+	$scope.removeSongFromDB = function(song, roomName) {
+		Database.ref("rooms/" + roomName + "/songs").child(song.id).remove();
+	};
+
+  $scope.removeSongFromList = function(song, roomName) {
+		var myPopup = $ionicPopup.show({
+			template: '<p style="direction: rtl">אחי אתה בטוח?</p>',
+			scope: $scope,
+			buttons: [
+				{ text: 'ביטול', type:'button-calm' },
+				{
+					text: '<b>אישור</b>',
+					type: 'button-positive',
+					onTap: function(e) {
+						var id = $scope.findSongID(song, roomName);
+						$scope.removeSongFromDB(id, roomName);
+					}
+				}
+			]
 		});
 	};
 
