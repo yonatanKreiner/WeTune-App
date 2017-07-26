@@ -346,3 +346,7 @@ input[disabled] {
 	border-color: transparent!important;
 	background-color: transparent!important;
 }
+
+.showDelete {
+	margin-right: 21px!important;
+}
