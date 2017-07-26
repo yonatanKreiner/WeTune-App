@@ -5,15 +5,15 @@
 	</div>
 
 	<!-- Footer -->
-	<ion-content has-header="true"  padding="true" class="has-header background-playlist" style="direction: rtl" ng-controller="playlistCtrl">
+	<ion-content has-header="true"  padding="true" class="has-header has-footer background-playlist" style="direction: rtl">
 		<div class="list">
 
-			<a class="item item-thumbnail-left" ng-repeat="song in allSongs" ng-class="$first ? 'currentSong' : 'waitingSong'">
-				<img ng-src="{{song.thumb || 'https://1.bp.blogspot.com/-eoZUK337wkQ/V0SZt1ObDOI/AAAAAAAADuo/qO81W8h4OjE0lfwb2LEJpn6sNn2gXmTPwCLcB/s1600/Song.png'}}">
-				<h2 style="white-space: initial!important; font-weight: 900;">{{song.name}}</h2>
-				<p>אורך: {{song.length}}</p>
+			<a class="item item-thumbnail-left" ng-repeat="(key, value) in allSongs track by $index" ng-class="$first ? 'currentSong' : 'waitingSong'">
+				<img ng-src="{{value.thumb || 'https://1.bp.blogspot.com/-eoZUK337wkQ/V0SZt1ObDOI/AAAAAAAADuo/qO81W8h4OjE0lfwb2LEJpn6sNn2gXmTPwCLcB/s1600/Song.png'}}">
+				<h2 style="white-space: initial!important; font-weight: 900;">{{value.name}}</h2>
+				<p>אורך: {{buildTimeFormat(value.length)}}</p>
 				<!-- <button class="button" ng-click="removeSongFromList(song, roomName)" data-ng-show="$root.userName == song.requester"> -->
-				<button class="button" ng-click="removeSongFromList(song, roomName)">
+				<button class="button" ng-click="removeSongFromList(key, roomName)">
 					<span class="glyphicon glyphicon-remove"></span> Remove {{currentUser}}
 				</button>
 			</a>

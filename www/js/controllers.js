@@ -2,7 +2,7 @@
  * [MODULE] PLAIN TEXT
  *********************************/
 
-var app = angular.module('starter.controllers', ["firebase"]).
+var app = angular.module('starter.controllers', ["firebase", "toastr"]).
   filter('plainText', function() {
     return function(text) {
       return  text ? String(text).replace(/<[^>]+>/gm, '') : '';
@@ -137,7 +137,7 @@ app.controller('WelcomeCtrl', function(Firebase, Auth, $scope, $stateParams, $io
 /**********************************
  * [CONTROLLER] CAMERA
  *********************************/
-app.controller('playlistCtrl', function($scope, $stateParams, Database, Auth, $ionicModal, $http, $ionicPopup, $rootScope, $location) {
+app.controller('playlistCtrl', function($scope, $stateParams, Database, Auth, $ionicModal, $http, $ionicPopup, $rootScope, $location, toastr) {
 	$scope.roomName = $stateParams.roomName;
 	$rootScope.$currentUser = $rootScope.userName;
 	Database.ref('rooms/' + $scope.roomName + '/users').push($rootScope.userName || 'unknown').then(function () {
@@ -240,7 +240,7 @@ app.controller('playlistCtrl', function($scope, $stateParams, Database, Auth, $i
 		});
 	};
 
-	$scope.addSongToDBList = function (song) {
+	$scope.addSongToList = function (song) {
 		$http.get('https://www.googleapis.com/youtube/v3/videos', {
 			params: {
 				key: "AIzaSyC-0pj2WMY25D3OzmB-Icl3GmBPI4PICjg",
@@ -250,14 +250,38 @@ app.controller('playlistCtrl', function($scope, $stateParams, Database, Auth, $i
 		}).then(function (data) {
 			var duration = convertISO8601ToSeconds(data.data.items[0].contentDetails.duration) / 60;
 			Database.ref('rooms/' + $scope.roomName + '/songs').push({"length": duration, "name":song.snippet.title, "requester":$rootScope.userName || 'unknown', "thumb":song.snippet.thumbnails.default.url, "url":song.id.videoId}).then(function (data) {
-
+				toastr.success('השיר יתנגן בעוד ' + $scope.buildTimeFormat(getTimeToThisSong(song.id.videoId)), "הוספת שיר בהצלחה");
+				$scope.modalAddSong.hide();
 			}, function (err) {
-
+				toastr.error('בעיה בהוספת שיר');
 			});
 		}, function (err) {
-
+			console.table(song);
+			Database.ref('rooms/' + $scope.roomName + '/songs').push({"length": 4, "name":song.snippet.title, "requester":$rootScope.userName || 'unknown', "thumb":song.snippet.thumbnails.default.url, "url":song.id.videoId}).then(function (data) {
+				toastr.success('השיר יתנגן בעוד ' + $scope.buildTimeFormat(getTimeToThisSong(song.id.videoId)), "הוספת שיר בהצלחה");
+				$scope.modalAddSong.hide();
+			}, function (err) {
+				toastr.error('בעיה בהוספת שיר');
+			});
 		});
 	};
+
+	$scope.buildTimeFormat = function(time) {
+		var string = time.toString();
+		return '' + string.substring(0, string.indexOf('.')) + ':' + string.substring(string.indexOf('.') + 1, string.indexOf('.') + 3) + '';
+	};
+
+	function getTimeToThisSong(songId) {
+		var length = 0;
+		angular.forEach($scope.allSongs, function (value, key) {
+			if(value.url != songId) {
+				length += value.length * 60;
+			} else {
+				return length / 60;
+			}
+		});
+		return length / 60;
+	}
 
 	function convertISO8601ToSeconds(input) {
 
@@ -275,28 +299,11 @@ app.controller('playlistCtrl', function($scope, $stateParams, Database, Auth, $i
 		return (totalseconds);
 	}
 
-	$scope.addSongToList = function (song) {
-		var myPopup = $ionicPopup.show({
-			template: '<p style="direction: rtl">להוסיף שיר לרשימה?</p>',
-			scope: $scope,
-			buttons: [
-				{ text: 'בטל', type:'button-calm' },
-				{
-					text: '<b>הוסף</b>',
-					type: 'button-positive',
-					onTap: function(e) {
-						$scope.addSongToDBList(song);
-					}
-				}
-			]
-		});
-	};
-
 	$scope.getYoutubeData = function(searchText){
 		$http.get('https://www.googleapis.com/youtube/v3/search', {
 			params: {
 				key: "AIzaSyC-0pj2WMY25D3OzmB-Icl3GmBPI4PICjg",
-				type: 'audio',
+				type: 'video',
 				maxResults: '12',
 				pageToken: $scope.nextPage ? $scope.nextPage : '',
 				part: 'id,snippet',

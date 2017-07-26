@@ -22,7 +22,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 		};
 	})
 
-	.config(function ($stateProvider, $urlRouterProvider) {
+	.config(function ($stateProvider, $urlRouterProvider, toastrConfig) {
+
+		angular.extend(toastrConfig, {
+			autoDismiss: true,
+			containerId: 'toast-container',
+			maxOpened: 0,
+			newestOnTop: true,
+			positionClass: 'toast-bottom-left',
+			preventDuplicates: false,
+			preventOpenDuplicates: false,
+			target: 'body'
+		});
 
 		$stateProvider
 
