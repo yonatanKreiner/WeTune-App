@@ -2,7 +2,7 @@
   <ion-header-bar class="bar-calm">
     
     <!-- style attribute for Android -->
-    <h1 class="title" style="text-align:center!important;">Créer un compte</h1>
+    <h1 class="title" style="text-align:center!important;">רישום משתמש חדש</h1>
     
     <!-- Button left -->
     <button class="button button-icon button-clear button-light ion-ios-arrow-thin-left" ng-click="closeRegister()"></button>
@@ -22,11 +22,11 @@
       -->
       <label class="item item-input">
         <i class="icon ion-ios-email-outline placeholder-icon-large"></i>
-        <input type="text" placeholder="Mail" ng-model="form.email">
+        <input type="text" placeholder="אימייל" ng-model="form.email">
       </label>
       <label class="item item-input">
         <i class="icon ion-ios-locked-outline placeholder-icon-large"></i>
-        <input type="password" placeholder="Mot de passe" ng-model="form.password">
+        <input type="password" placeholder="ססמא" ng-model="form.password">
       </label>
       <!--
       <label class="item item-input">
@@ -37,13 +37,13 @@
     </div>
 
     <p class="calm text-center">
-      En vous inscrivant vous acceptez<br/>les Conditions d'utilisation
+      על ידי הרשמה לאתר הינך מסכים<br/>לתנאי השימוש
     </p>
     <p class="assertive text-center" ng-if="error"><strong>{{ error }}</strong></p>
 
     <div class="validation-center">
       <button class="button button-balanced" ng-click="createUser(form)">
-        Valider
+        שלח
       </button>
     </div>
   </ion-content>
