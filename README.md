@@ -25,11 +25,4 @@ clone the project
 - open the WeTune.xcodeproj
 - deploy the app from xcode
 
-# Deploy the project to android devices
-
-Use following commands :
-- ```cd ionic-tab-firebase-3```
-- ```npm install```
-- ```ionic serve``` or use [lab.ionic.io](http://lab.ionic.io) software
-
 # Thanks
