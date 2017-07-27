@@ -267,7 +267,12 @@ app.controller('playlistCtrl', function($scope, $stateParams, Database, Auth, $i
 
 	$scope.buildTimeFormat = function(time) {
 		var string = time.toString();
-		return '' + string.substring(0, string.indexOf('.')) + ':' + string.substring(string.indexOf('.') + 1, string.indexOf('.') + 3) + '';
+		var hours = string.substring(0, string.indexOf('.'));
+		var minutes = string.substring(string.indexOf('.') + 1, string.indexOf('.') + 3);
+		if(minutes.length < 2) {
+			minutes = '0' + minutes;
+		}
+		return hours + ':' + minutes;
 	};
 
 	function getTimeToThisSong(songId) {
